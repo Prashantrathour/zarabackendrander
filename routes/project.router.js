@@ -32,7 +32,7 @@ projectrouter.post("/create", async (req, res) => {
   }
 });
 projectrouter.post("/upload", async (req, res) => {
-  const { name, description, time, user, userID } = req.body;
+  const { name, description, time, user, userID,projectID } = req.body;
 
   try {
     // Check if required fields are provided
@@ -51,6 +51,7 @@ projectrouter.post("/upload", async (req, res) => {
       time,
       user,
       userID,
+      projectID
     });
     await newProject.save();
 
@@ -78,10 +79,13 @@ projectrouter.get("/", async (req, res) => {
       .json({ success: false, message: "Internal Server Error" });
   }
 });
-projectrouter.get("/getupload", async (req, res) => {
-  const { userID } = req.body;
+projectrouter.get("/getupload/:id", async (req, res) => {
+  const { userID} = req.body;
+  const id=req.params.id
+
   try {
-    const projects = await projectuploadModel.find({ userID: userID });
+    const projects = await projectuploadModel.find({ userID: userID,projectID:id });
+   
     return res.status(200).json({ success: true, data: projects });
   } catch (error) {
     console.error(error);

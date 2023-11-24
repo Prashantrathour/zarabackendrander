@@ -8,7 +8,8 @@ const projectuploadschema = mongoose.Schema({
         type: String,
         default: Date.now
     },
-    description: String
+    description: String,
+    projectID: String
 });
 
 const projectuploadModel = mongoose.model("projectupload", projectuploadschema);
